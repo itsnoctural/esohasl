@@ -16,11 +16,6 @@ const nextConfig = {
         destination: "https://www.youtube.com/@esohasl",
         permanent: false,
       },
-      {
-        source: "/:id",
-        destination: "/script/:id",
-        permanent: true,
-      },
     ];
   },
   experimental: {
