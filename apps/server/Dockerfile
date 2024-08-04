@@ -8,6 +8,8 @@ RUN rm -rf /app/apps/web
 
 RUN bun install
 RUN bunx prisma generate --schema ./packages/db/prisma/schema.prisma
+
+WORKDIR /app/apps/server
 RUN bun run build
 
 FROM oven/bun:slim
