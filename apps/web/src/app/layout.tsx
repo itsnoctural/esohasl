@@ -1,5 +1,6 @@
 import { Background } from "@/components/background";
 import { ClientProviders } from "@/components/client-providers";
+import { Analytics } from "@vercel/analytics/react";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -24,6 +25,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class">
             <Background />
             {children}
+            <Analytics />
           </ThemeProvider>
         </ClientProviders>
       </body>
