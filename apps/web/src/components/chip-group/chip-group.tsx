@@ -38,7 +38,7 @@ export function ChipGroup({
       <nav className="relative my-3 flex items-center">
         <div
           data-visible={leftVisibility}
-          className="absolute -left-6 hidden after:w-6 after:bg-gradient-to-r after:from-background after:from-20% after:to-[rgba(255,255,255,0)] after:to-80% after:content-[''] data-[visible=true]:flex"
+          className="absolute -left-3 hidden after:w-6 after:bg-gradient-to-r after:from-background after:from-20% after:to-[rgba(255,255,255,0)] after:to-80% after:content-[''] data-[visible=true]:flex"
         >
           <button
             type="button"
@@ -60,7 +60,7 @@ export function ChipGroup({
         </div>
         <div
           data-visible={rightVisibility}
-          className="absolute -right-6 hidden before:w-6 before:bg-gradient-to-l before:from-background before:from-20% before:to-[rgba(255,255,255,0)] before:to-80% before:content-[''] data-[visible=true]:flex"
+          className="absolute -right-3 hidden before:w-6 before:bg-gradient-to-l before:from-background before:from-20% before:to-[rgba(255,255,255,0)] before:to-80% before:content-[''] data-[visible=true]:flex"
         >
           <button
             type="button"
