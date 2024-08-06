@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const { data: categories } = await api.v1.scripts.categories.get({
+    query: { limit: 10 },
     fetch: { next: { revalidate: 60 } },
   });
   const { data } = await api.v1.scripts.index.get({
