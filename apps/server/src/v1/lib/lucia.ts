@@ -10,6 +10,8 @@ export const lucia = new Lucia(adapter, {
     name: "esohasl.auth",
     attributes: {
       secure: Bun.env.NODE_ENV === "production",
+      domain:
+        Bun.env.NODE_ENV === "production" ? Bun.env.AUTH_DOMAIN : "localhost",
     },
   },
   getUserAttributes: (attributes) => {
