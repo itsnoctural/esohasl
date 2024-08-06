@@ -12,32 +12,41 @@ const nanoid = customAlphabet(alphabet, 8);
 
 export const ScriptsController = new Elysia({ prefix: "/scripts" })
   .use(ScriptModels)
-  .get("/categories", async () => {
-    const categories = await prisma.script.groupBy({
-      by: "gameName",
-      _sum: {
-        views: true,
-      },
-      orderBy: {
+  .get(
+    "/categories",
+    async ({ query }) => {
+      const categories = await prisma.script.groupBy({
+        by: "gameName",
         _sum: {
-          views: "desc",
+          views: true,
         },
-      },
-    });
+        orderBy: {
+          _sum: {
+            views: "desc",
+          },
+        },
+        take: query.limit,
+      });
 
-    const modified = [];
+      const modified = [];
 
-    for (let i = 0; i < 7; i++) {
-      const match = categories[i].gameName.match(
-        /(?:\[[^\]]*\]\s*)?([^\[\]]+)/,
-      );
-      if (match?.[1]) {
-        modified.push({ gameName: match[1].trim() });
+      for (let i = 0; i < categories.length; i++) {
+        const match = categories[i].gameName.match(
+          /(?:\[[^\]]*\]\s*)?([^\[\]]+)/,
+        );
+        if (match?.[1]) {
+          modified.push({ gameName: match[1].trim() });
+        }
       }
-    }
 
-    return modified;
-  })
+      return modified;
+    },
+    {
+      query: t.Object({
+        limit: t.Numeric({ maximum: 25 }),
+      }),
+    },
+  )
   .get(
     "/",
     async ({ query }) => {
