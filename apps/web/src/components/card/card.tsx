@@ -20,7 +20,7 @@ export function Card({
   userId,
 }: CardProps) {
   return (
-    <Link href={`/script/${id}`}>
+    <Link href={`/script/${id}`} prefetch={false}>
       <div className="flex flex-col gap-y-3">
         <div>
           <Image
