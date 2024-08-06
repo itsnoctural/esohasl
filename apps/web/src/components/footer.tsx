@@ -10,6 +10,7 @@ export function Footer() {
             href={"/youtube"}
             target="_blank"
             className="text-muted-foreground"
+            prefetch={false}
           >
             esohasl
           </Link>
