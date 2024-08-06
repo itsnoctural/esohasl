@@ -68,7 +68,7 @@ export default async function ScriptPage({
           src={`/thumbnails/${data.id}`}
           width={720}
           height={405}
-          className="rounded-xl"
+          className="aspect-video rounded-xl object-cover"
           alt={`${data.title} thumbnail`}
         />
 
