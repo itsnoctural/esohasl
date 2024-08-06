@@ -28,7 +28,7 @@ export function Card({
             alt={`${title} thumbnail`}
             width={305}
             height={172}
-            className="w-full rounded-lg"
+            className="aspect-video w-full rounded-lg object-cover"
           />
         </div>
 
