@@ -36,7 +36,12 @@ export function ScriptInteractives({
           </Link>
         )}
       </Button>
-      <Button size={"icon"} variant={"secondary"} onClick={() => copyScript()}>
+      <Button
+        size={"icon"}
+        variant={"secondary"}
+        onClick={() => copyScript()}
+        aria-label="Copy script"
+      >
         {isCopied ? <Check size={16} /> : <Copy size={16} />}
       </Button>
     </div>

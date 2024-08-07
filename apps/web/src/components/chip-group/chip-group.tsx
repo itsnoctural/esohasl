@@ -44,6 +44,7 @@ export function ChipGroup({
             type="button"
             className="h-full w-8 bg-background"
             onClick={() => onScroll(-175)}
+            aria-label="Previous categories"
           >
             <ChevronLeft size={32} strokeWidth={1} />
           </button>
@@ -66,6 +67,7 @@ export function ChipGroup({
             type="button"
             className="h-full w-8 bg-background"
             onClick={() => onScroll(175)}
+            aria-label="Next categories"
           >
             <ChevronRight size={32} strokeWidth={1} />
           </button>
