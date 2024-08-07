@@ -9,6 +9,7 @@ type CardProps = {
   views: number;
   createdAt: Date;
   userId: number;
+  priority: boolean;
 };
 
 export function Card({
@@ -18,6 +19,7 @@ export function Card({
   views,
   createdAt,
   userId,
+  priority,
 }: CardProps) {
   return (
     <Link href={`/script/${id}`} prefetch={false}>
@@ -29,6 +31,7 @@ export function Card({
             width={305}
             height={172}
             className="aspect-video w-full rounded-lg object-cover"
+            priority={priority}
           />
         </div>
 

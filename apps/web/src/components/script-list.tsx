@@ -57,7 +57,9 @@ export function ScriptList({
           <CardSkeletons quantity={16} />
         ) : (
           data?.pages.map((page) =>
-            page?.scripts.map((item) => <Card key={item.id} {...item} />),
+            page?.scripts.map((item, index) => (
+              <Card key={item.id} {...item} priority={index <= 4} />
+            )),
           )
         )}
 
