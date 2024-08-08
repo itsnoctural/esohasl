@@ -3,7 +3,7 @@ import { Card } from "@/components/card";
 import { CodeHighlight } from "@/components/code-highlight";
 import { ScriptInteractives } from "@/components/script-interactives";
 import { api } from "@/lib/api";
-import { intlFormatDistance } from "date-fns";
+import { intlFormatFromNow } from "@/lib/date";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -88,7 +88,7 @@ export default async function ScriptPage({
         <div className="rounded-lg bg-muted/75 p-3">
           <div className="flex gap-x-4 font-medium">
             <span>{data.views} views</span>
-            <span>{intlFormatDistance(data.createdAt, new Date())}</span>
+            <span>{intlFormatFromNow(data.createdAt)}</span>
           </div>
           {data.description && (
             <p className="whitespace-pre-line">{data.description}</p>

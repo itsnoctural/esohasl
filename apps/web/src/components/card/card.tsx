@@ -1,4 +1,4 @@
-import { intlFormatDistance } from "date-fns";
+import { intlFormatFromNow } from "@/lib/date";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -51,7 +51,7 @@ export function Card({
             <div className="flex text-sm text-muted-foreground">
               <span>{views} views</span>
               <span className="before:mx-2 before:content-['•']">
-                {intlFormatDistance(createdAt, new Date())}
+                {intlFormatFromNow(createdAt)}
               </span>
             </div>
           </div>
