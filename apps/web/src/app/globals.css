@@ -69,6 +69,8 @@
 }
 
 .shiki {
+  text-wrap: wrap;
+  word-break: break-word;
   padding: 1rem;
 }
 
