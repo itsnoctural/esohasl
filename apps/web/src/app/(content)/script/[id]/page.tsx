@@ -17,25 +17,24 @@ export async function generateMetadata({
     fetch: { next: { revalidate: 60 } },
   });
 
-  if (data) {
-    return {
-      title: data.title,
-      authors: [{ name: data.user.username }],
-      openGraph: {
-        title: data.title,
-        ...(data.description && { description: data.description }),
-        url: `${url}/script/${data.id}`,
-        images: `${process.env.NEXT_PUBLIC_CDN}/thumbnails/${data.id}`,
-      },
-      twitter: {
-        title: data.title,
-        ...(data.description && { description: data.description }),
-        images: `${process.env.NEXT_PUBLIC_CDN}/thumbnails/${data.id}`,
-      },
-    };
-  }
+  if (!data) return { title: "404 | Not Found" };
 
-  return {};
+  return {
+    title: data.title,
+    authors: [{ name: data.user.username }],
+    openGraph: {
+      title: data.title,
+      ...(data.description && { description: data.description }),
+      url: `${url}/script/${data.id}`,
+      images: `${process.env.NEXT_PUBLIC_CDN}/thumbnails/${data.id}`,
+      siteName: "esohasl.net",
+    },
+    twitter: {
+      title: data.title,
+      ...(data.description && { description: data.description }),
+      images: `${process.env.NEXT_PUBLIC_CDN}/thumbnails/${data.id}`,
+    },
+  };
 }
 
 export default async function ScriptPage({

@@ -7,6 +7,7 @@ export const description =
 export const openGraph = {
   description,
   url,
+  siteName: "esohasl.net",
 };
 export const twitter = {
   creator: "esohasl",

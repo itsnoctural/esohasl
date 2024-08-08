@@ -5,8 +5,6 @@ import { title } from "../shared-metadata";
 
 export const metadata: Metadata = {
   title,
-  openGraph: { title },
-  twitter: { title },
 };
 
 export default async function Home() {
