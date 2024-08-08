@@ -9,7 +9,7 @@ type CardProps = {
   views: number;
   createdAt: Date;
   userId: number;
-  priority: boolean;
+  priority?: boolean;
 };
 
 export function Card({
