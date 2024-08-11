@@ -114,7 +114,7 @@ export const AuthController = new Elysia({ prefix: "/auth" })
           const user = await UsersService.findOrCreate(
             `${sub}`,
             "google",
-            name.replaceAll(" ", ""),
+            name,
           );
           BunnyService.uploadWithUrl(picture, `avatars/${user.id}`);
 

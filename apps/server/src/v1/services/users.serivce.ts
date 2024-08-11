@@ -17,7 +17,9 @@ export async function findOrCreate(
   name: string,
 ) {
   const user = await prisma.user.findUnique({ where: { providerId } });
-  const username = await getNotTakenName(name);
+  const username = await getNotTakenName(
+    name.normalize("NFKD").replace(/[^\w]/g, ""),
+  );
 
   if (!user) {
     return await prisma.user.create({
