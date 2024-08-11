@@ -50,7 +50,9 @@ export async function Profile() {
 
   return (
     <Button variant={"outline"} size={"sm"} asChild>
-      <Link href={"/signin"}>Sign In</Link>
+      <Link href={"/signin"} prefetch={false}>
+        Sign In
+      </Link>
     </Button>
   );
 }
