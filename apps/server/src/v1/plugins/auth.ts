@@ -11,9 +11,9 @@ export const auth = new Elysia()
   .resolve({ as: "scoped" }, async ({ request, error, cookie }) => {
     if (request.method !== "GET") {
       const origin = request.headers.get("Origin");
-      const host = request.headers.get("Host"); // TODO: change to x-forwarded-host or (vercel ip client?)
+      const host = request.headers.get("Host");
 
-      if (!origin || !host || verifyRequestOrigin(origin, [host]))
+      if (!origin || !host || !verifyRequestOrigin(origin, [host]))
         throw error(403);
     }
 
