@@ -58,7 +58,7 @@ export function ScriptList({
         ) : (
           data?.pages.map((page) =>
             page?.scripts.map((item, index) => (
-              <Card key={item.id} {...item} priority={index <= 4} />
+              <Card key={item.id} {...item} priority={index <= 3} />
             )),
           )
         )}
