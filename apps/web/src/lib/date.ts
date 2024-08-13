@@ -120,7 +120,7 @@ export function intlFormatFromNow(date: Date) {
     unit = "minute";
   } else if (
     absoluteDiffInSeconds < secondsInDay &&
-    Math.abs(differenceInDays(date, dateNow)) < 1
+    Math.abs(differenceInDays(_date, dateNow)) < 1
   ) {
     value = Math.trunc(diffInSeconds / secondsInHour);
     unit = "hour";
