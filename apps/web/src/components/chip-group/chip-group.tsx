@@ -26,8 +26,6 @@ export function ChipGroup({
 
       ref.current.scrollLeft += x;
 
-      console.log(maxScroll);
-
       setLeftVisibility(ref.current.scrollLeft + x > 0);
       setRightVisibility(ref.current.scrollLeft + x < maxScroll);
     }
