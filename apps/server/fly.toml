@@ -16,6 +16,10 @@ primary_region = 'iad'
   min_machines_running = 1
   processes = ['app']
 
+[env]
+  AUTH_DOMAIN = "esohasl.net"
+  HOME_URL = "https://esohasl.net"
+
 [[vm]]
   size = 'shared-cpu-1x'
   memory_mb = 256
