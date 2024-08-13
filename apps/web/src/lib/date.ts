@@ -124,12 +124,12 @@ export function intlFormatFromNow(date: Date) {
   ) {
     value = Math.trunc(diffInSeconds / secondsInHour);
     unit = "hour";
-  } else if (absoluteDiffInSeconds < secondsInWeek) {
-    const diff = differenceInDays(_date, dateNow);
-    if (Math.abs(diff) < 7) {
-      value = diff;
-      unit = "day";
-    }
+  } else if (
+    absoluteDiffInSeconds < secondsInWeek &&
+    Math.abs(differenceInDays(_date, dateNow)) < 7
+  ) {
+    value = differenceInDays(_date, dateNow);
+    unit = "day";
   } else if (absoluteDiffInSeconds < secondsInMonth) {
     value = differenceInWeeks(_date, dateNow);
     unit = "week";
