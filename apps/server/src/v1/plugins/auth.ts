@@ -11,9 +11,8 @@ export const auth = new Elysia()
   .resolve({ as: "scoped" }, async ({ request, error, cookie }) => {
     if (request.method !== "GET") {
       const origin = request.headers.get("Origin");
-      const host = request.headers.get("Host");
 
-      if (!origin || !host || !verifyRequestOrigin(origin, [host]))
+      if (!origin || !verifyRequestOrigin(origin, [Bun.env.HOME_URL]))
         throw error(403);
     }
 
