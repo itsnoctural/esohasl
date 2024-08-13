@@ -11,6 +11,7 @@ export async function middleware(request: NextRequest) {
     if (status === 200)
       return NextResponse.redirect(
         new URL(`/script${request.nextUrl.pathname}`, request.url),
+        { status: 308 },
       );
   }
 
