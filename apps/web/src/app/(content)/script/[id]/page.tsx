@@ -69,6 +69,7 @@ export default async function ScriptPage({
           height={405}
           className="aspect-video rounded-xl object-cover"
           alt={`${data.title} thumbnail`}
+          priority // next/image not properly sizing images #44244
         />
 
         <div className="flex flex-col gap-y-1">
