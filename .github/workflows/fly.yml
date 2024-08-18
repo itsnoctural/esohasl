@@ -1,8 +1,8 @@
 name: Fly.io Deploy
 on:
   push:
-    branches:
-      - main
+    branches: main
+    paths: "apps/server/**"
 jobs:
   deploy:
     name: Deploy app
