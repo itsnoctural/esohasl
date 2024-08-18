@@ -3,6 +3,7 @@ import { ClientProviders } from "@/components/client-providers";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
+import Script from "next/script";
 import "./globals.css";
 import { description, openGraph, twitter } from "./shared-metadata";
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             {children}
             {/* <Analytics />
             <SpeedInsights /> */}
+            <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
           </ThemeProvider>
         </ClientProviders>
       </body>
