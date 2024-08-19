@@ -1,5 +1,6 @@
 import { Background } from "@/components/background";
 import { ClientProviders } from "@/components/client-providers";
+import { BaselimeRum } from "@baselime/react-rum";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -24,7 +25,12 @@ export default function RootLayout({
         <ClientProviders>
           <ThemeProvider attribute="class">
             <Background />
-            {children}
+            <BaselimeRum
+              apiKey={"dd9040922b8e6799fa7c9242f6b99311ae7307a3"}
+              enableWebVitals
+            >
+              {children}
+            </BaselimeRum>
             {/* <Analytics />
             <SpeedInsights /> */}
             <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
