@@ -6,6 +6,19 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   if (pathname.length > 2) {
+    const match = pathname.match(/\/raw\/([^\/]+)/);
+    if (match) {
+      const { status } = await api.v1.scripts.raw({ id: match[1] }).get();
+
+      if (status === 200)
+        return NextResponse.redirect(
+          `${process.env.NEXT_PUBLIC_API}/v1/scripts/raw/${match[1]}`,
+          { status: 308 },
+        );
+
+      return NextResponse.next();
+    }
+
     const { status } = await api.v1.scripts({ id: pathname.slice(1) }).get();
 
     if (status === 200)
