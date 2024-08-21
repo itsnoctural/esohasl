@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function Privacy() {
   return (
-    <main className="my-6 flex min-h-screen w-full">
+    <main className="my-6 flex w-full">
       <div className="mx-auto flex max-w-screen-lg flex-col items-center gap-y-4">
         <div>
           <h1 className="text-3xl font-semibold lg:text-5xl">Privacy Policy</h1>
