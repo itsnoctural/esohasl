@@ -4,7 +4,9 @@ export function TextContainer({ children }: { children: React.ReactNode }) {
 
 export function TextContent({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-left text-muted-foreground lg:text-lg">{children}</p>
+    <p className="text-left text-base text-muted-foreground lg:text-lg">
+      {children}
+    </p>
   );
 }
 
