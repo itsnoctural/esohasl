@@ -22,4 +22,4 @@ node_modules
 **/*.log
 **/*.bun
 
-prisma-client
+**/prisma-client
