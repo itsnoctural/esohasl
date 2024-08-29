@@ -1,4 +1,4 @@
-import { type Prisma, prisma } from "@esohasl/db";
+import { prisma } from "@esohasl/db";
 import { Elysia, t } from "elysia";
 import { customAlphabet } from "nanoid";
 import { ScriptModels } from "../models/script.model";
@@ -9,6 +9,8 @@ import * as ScriptsService from "../services/scripts.service";
 const alphabet =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 const nanoid = customAlphabet(alphabet, 8);
+
+type QueryMode = "default" | "insensitive"; // workaround. next.js type-checking entire backend, including packages
 
 export const ScriptsController = new Elysia({ prefix: "/scripts" })
   .use(ScriptModels)
@@ -50,18 +52,28 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
   .get(
     "/",
     async ({ query }) => {
-      const user: Prisma.ScriptWhereInput = query.u
-        ? { user: { id: { equals: query.u } } }
-        : {};
+      const user = query.u ? { user: { id: { equals: query.u } } } : {};
       const exclude = query.exclude
         ? { NOT: { id: { equals: query.exclude } } }
         : {};
-      const search: Prisma.ScriptWhereInput = query.q
+      const search = query.q
         ? {
             OR: [
-              { title: { contains: query.q, mode: "insensitive" } },
-              { gameName: { contains: query.q, mode: "insensitive" } },
-              { description: { contains: query.q, mode: "insensitive" } },
+              {
+                title: { contains: query.q, mode: "insensitive" as QueryMode },
+              },
+              {
+                gameName: {
+                  contains: query.q,
+                  mode: "insensitive" as QueryMode,
+                },
+              },
+              {
+                description: {
+                  contains: query.q,
+                  mode: "insensitive" as QueryMode,
+                },
+              },
             ],
           }
         : {};
