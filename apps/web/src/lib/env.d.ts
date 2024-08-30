@@ -2,6 +2,7 @@ namespace NodeJS {
   interface ProcessEnv {
     NEXT_PUBLIC_API: string;
     NEXT_PUBLIC_CDN: string;
+    NEXT_PUBLIC_CDN_EXP: string;
 
     AUTH_DOMAIN: string;
 
