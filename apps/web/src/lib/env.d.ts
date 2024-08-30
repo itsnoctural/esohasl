@@ -2,9 +2,13 @@ namespace NodeJS {
   interface ProcessEnv {
     NEXT_PUBLIC_API: string;
     NEXT_PUBLIC_CDN: string;
-    NEXT_PUBLIC_CDN_EXP: string;
 
     AUTH_DOMAIN: string;
+
+    AWS_S3_REGION: string;
+    AWS_S3_BUCKET: string;
+    AWS_S3_ACCESS_KEY: string;
+    AWS_S3_SECRET_ACCESS_KEY: string;
 
     GITHUB_CLIENT_ID: string;
     GITHUB_CLIENT_SECRET: string;
@@ -13,9 +17,6 @@ namespace NodeJS {
     GOOGLE_CLIENT_ID: string;
     GOOGLE_CLIENT_SECRET: string;
     GOOGLE_REDIRECT_URI: string;
-
-    BUNNYNET_STORAGE: string;
-    BUNNYNET_ACCESSKEY: string;
 
     HOME_URL: string;
   }
