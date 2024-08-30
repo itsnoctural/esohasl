@@ -3,7 +3,7 @@ import { Elysia, t } from "elysia";
 import { customAlphabet } from "nanoid";
 import { ScriptModels } from "../models/script.model";
 import { auth } from "../plugins/auth";
-import * as BunnyService from "../services/bunny.service";
+import * as AWSS3Service from "../services/aws-s3.service";
 import * as ScriptsService from "../services/scripts.service";
 
 const alphabet =
@@ -123,7 +123,7 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
           );
 
           const id = nanoid();
-          BunnyService.uploadWithFile(body.thumbnail, `thumbnails/${id}`);
+          AWSS3Service.uploadWithFile(body.thumbnail, `thumbnails/${id}`);
 
           return await prisma.script.create({
             data: {
@@ -149,8 +149,8 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
           );
 
           if (body.thumbnail) {
-            await BunnyService.deleteFile("thumbnails", params.id);
-            BunnyService.uploadWithFile(
+            await AWSS3Service.deleteFile("thumbnails", params.id);
+            AWSS3Service.uploadWithFile(
               body.thumbnail,
               `thumbnails/${params.id}`,
             );
@@ -175,7 +175,7 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
             where: { id: params.id, userId: user.id },
           });
 
-          BunnyService.deleteFile("thumbnails", params.id);
+          AWSS3Service.deleteFile("thumbnails", params.id);
 
           return "OK";
         } catch {
