@@ -3,7 +3,7 @@ import { Elysia, error, t } from "elysia";
 import { github, google, lucia } from "../lib/lucia";
 import { auth } from "../plugins/auth";
 import * as AuthService from "../services/auth.service";
-import * as BunnyService from "../services/bunny.service";
+import * as AWSS3Service from "../services/aws-s3.service";
 import * as UsersService from "../services/users.serivce";
 
 export const AuthController = new Elysia({ prefix: "/auth" })
@@ -84,7 +84,7 @@ export const AuthController = new Elysia({ prefix: "/auth" })
             "github",
             login,
           );
-          BunnyService.uploadWithUrl(avatar_url, `avatars/${user.id}`);
+          AWSS3Service.uploadWithUrl(avatar_url, `avatars/${user.id}`);
 
           const session = await lucia.createSession(user.id, {});
           const sessionCookie = lucia.createSessionCookie(session.id);
@@ -116,7 +116,7 @@ export const AuthController = new Elysia({ prefix: "/auth" })
             "google",
             name,
           );
-          BunnyService.uploadWithUrl(picture, `avatars/${user.id}`);
+          AWSS3Service.uploadWithUrl(picture, `avatars/${user.id}`);
 
           const session = await lucia.createSession(user.id, {});
           const sessionCookie = lucia.createSessionCookie(session.id);
