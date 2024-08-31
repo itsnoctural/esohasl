@@ -18,7 +18,7 @@ export const cache = new Elysia()
 
       const url = new URL(request.url);
       await redis.set(url.pathname + url.search, JSON.stringify(response), {
-        EX: 60,
+        EX: 300,
       });
     }
   });
