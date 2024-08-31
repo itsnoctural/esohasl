@@ -1,0 +1,3 @@
+{
+  "extends": "@esohasl/tsconfig/base.json"
+}

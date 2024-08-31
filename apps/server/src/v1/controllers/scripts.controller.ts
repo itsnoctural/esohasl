@@ -3,6 +3,7 @@ import { Elysia, t } from "elysia";
 import { customAlphabet } from "nanoid";
 import { ScriptModels } from "../models/script.model";
 import { auth } from "../plugins/auth";
+import { cache } from "../plugins/cache";
 import * as AWSS3Service from "../services/aws-s3.service";
 import * as ScriptsService from "../services/scripts.service";
 
@@ -12,6 +13,7 @@ const nanoid = customAlphabet(alphabet, 8);
 
 export const ScriptsController = new Elysia({ prefix: "/scripts" })
   .use(ScriptModels)
+  .use(cache)
   .get(
     "/categories",
     async ({ query }) => {
