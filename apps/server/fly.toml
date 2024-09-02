@@ -19,6 +19,12 @@ primary_region = 'iad'
     type = "requests"
     soft_limit = 250
     hard_limit = 750
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "15s"
+    method = "GET"
+    timeout = "5s"
+    path = "/ping"
 
 [env]
   AUTH_DOMAIN = "esohasl.net"
