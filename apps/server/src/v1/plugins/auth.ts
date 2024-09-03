@@ -4,8 +4,9 @@ import { lucia } from "../lib/lucia";
 
 export const auth = new Elysia()
   .guard({
+    as: "scoped",
     cookie: t.Cookie({
-      "esohasl.auth": t.String(), // BUG: .guard doesn't work with cookie since 1.1.0
+      "esohasl.auth": t.String(),
     }),
   })
   .resolve({ as: "scoped" }, async ({ request, error, cookie }) => {
@@ -15,9 +16,6 @@ export const auth = new Elysia()
       if (!origin || !verifyRequestOrigin(origin, [Bun.env.HOME_URL]))
         throw error(403);
     }
-
-    // TODO: remove after fix .guard
-    if (!cookie["esohasl.auth"].value) throw error(422);
 
     const { session, user } = await lucia.validateSession(
       cookie["esohasl.auth"].value,
