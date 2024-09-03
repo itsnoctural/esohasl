@@ -5,7 +5,9 @@ import { api as v1 } from "./v1";
 const app = new Elysia()
   .use(cors())
   .use(v1)
-  .get("/ping", () => "pong")
+  .get("/ping", () => {
+    return { status: "pong", region: process.env.FLY_REGION };
+  })
   .listen(3000);
 
 export type App = typeof app;
