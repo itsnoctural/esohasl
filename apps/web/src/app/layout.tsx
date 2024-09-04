@@ -33,7 +33,15 @@ export default function RootLayout({
             </BaselimeRum>
             {/* <Analytics />
             <SpeedInsights /> */}
-            <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+            <Script
+              async
+              src="https://scripts.simpleanalyticscdn.com/latest.js"
+            />
+            <Script
+              async
+              data-cfasync="false"
+              src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1012710"
+            />
           </ThemeProvider>
         </ClientProviders>
       </body>
