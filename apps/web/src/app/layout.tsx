@@ -38,6 +38,11 @@ export default function RootLayout({
               src="https://scripts.simpleanalyticscdn.com/latest.js"
             />
             <Script
+              defer
+              src="https://umami-wild-wildflower-5382.fly.dev/script.js"
+              data-website-id="daedab4e-f846-464b-bd70-0974ba82e1eb"
+            />
+            <Script
               async
               data-cfasync="false"
               src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1012710"
