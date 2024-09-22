@@ -6,8 +6,8 @@
     "build": "turbo build"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "turbo": "^2.1.0"
+    "@biomejs/biome": "^1.9.2",
+    "turbo": "^2.1.2"
   },
   "trustedDependencies": [
     "@biomejs/biome",
@@ -16,5 +16,5 @@
     "prisma"
   ],
   "workspaces": ["apps/*", "packages/*"],
-  "packageManager": "bun@1.1.22"
+  "packageManager": "bun@1.1.29"
 }
