@@ -35,7 +35,11 @@ export default function RootLayout({
               data-cfasync="false"
               src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1012710"
             />
-            <Script async data-cfasync="false" src="/sw.js" />
+            <Script
+              async
+              data-cfasync="false"
+              src="//d2w9cdu84xc4eq.cloudfront.net/?udcwd=1005401"
+            />
           </ThemeProvider>
         </ClientProviders>
       </body>
