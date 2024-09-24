@@ -151,7 +151,6 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
           );
 
           if (body.thumbnail) {
-            await AWSS3Service.deleteFile("thumbnails", params.id);
             AWSS3Service.uploadWithFile(
               body.thumbnail,
               `thumbnails/${params.id}`,
