@@ -38,7 +38,7 @@ export default function RootLayout({
             <Script
               async
               data-cfasync="false"
-              src="//d2w9cdu84xc4eq.cloudfront.net/?udcwd=1005401"
+              src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1097965"
             />
           </ThemeProvider>
         </ClientProviders>
