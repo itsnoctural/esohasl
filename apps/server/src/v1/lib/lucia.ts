@@ -1,9 +1,9 @@
-import { prisma } from "@esohasl/db";
-import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
+import { db, session, user } from "@esohasl/db";
+import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { GitHub, Google } from "arctic";
 import { Lucia } from "lucia";
 
-const adapter = new PrismaAdapter(prisma.session, prisma.user);
+const adapter = new DrizzleSQLiteAdapter(db, session, user);
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {

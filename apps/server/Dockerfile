@@ -11,6 +11,10 @@ RUN bun run build
 
 FROM oven/bun:slim
 
+RUN apt update
+RUN apt install -y ca-certificates
+RUN update-ca-certificates
+
 WORKDIR /app
 ENV NODE_ENV=production
 

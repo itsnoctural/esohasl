@@ -1,9 +1,20 @@
-import { type Prisma, prisma } from "@esohasl/db";
+import {
+  and,
+  asc,
+  count,
+  db,
+  desc,
+  eq,
+  ilike,
+  not,
+  or,
+  script,
+  sql,
+} from "@esohasl/db";
 import { Elysia, t } from "elysia";
 import { customAlphabet } from "nanoid";
 import { ScriptModels } from "../models/script.model";
 import { auth } from "../plugins/auth";
-import { cache } from "../plugins/cache";
 import * as AWSS3Service from "../services/aws-s3.service";
 import * as ScriptsService from "../services/scripts.service";
 
@@ -13,22 +24,18 @@ const nanoid = customAlphabet(alphabet, 8);
 
 export const ScriptsController = new Elysia({ prefix: "/scripts" })
   .use(ScriptModels)
-  .use(cache)
   .get(
     "/categories",
     async ({ query }) => {
-      const categories = await prisma.script.groupBy({
-        by: "gameName",
-        _sum: {
-          views: true,
-        },
-        orderBy: {
-          _sum: {
-            views: "desc",
-          },
-        },
-        take: query.limit,
-      });
+      const categories = await db
+        .select({
+          gameName: script.gameName,
+          views: sql`count(${script.views})`,
+        })
+        .from(script)
+        .orderBy(sql`views`)
+        .limit(query.limit)
+        .groupBy(script.gameName);
 
       const modified = [];
 
@@ -52,46 +59,46 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
   .get(
     "/",
     async ({ query }) => {
-      const user: Prisma.ScriptWhereInput = query.u
-        ? { user: { id: { equals: query.u } } }
-        : {};
-      const exclude = query.exclude
-        ? { NOT: { id: { equals: query.exclude } } }
-        : {};
-      const search: Prisma.ScriptWhereInput = query.q
-        ? {
-            OR: [
-              { title: { contains: query.q, mode: "insensitive" } },
-              { gameName: { contains: query.q, mode: "insensitive" } },
-              { description: { contains: query.q, mode: "insensitive" } },
-            ],
-          }
-        : {};
-
-      const scriptWhere = { ...search, ...exclude, ...user };
-
       const page = query.page ? query.page : 1;
       const limit = query.limit ? query.limit : 16;
-      const skip = (page - 1) * limit;
+      const offset = (page - 1) * limit;
 
-      const scripts = await prisma.script.findMany({
-        where: scriptWhere,
-        orderBy:
+      const scriptWhere = and(
+        query.q
+          ? or(
+              ilike(script.title, query.q),
+              ilike(script.gameName, query.q),
+              ilike(script.description, query.q),
+            )
+          : undefined,
+        query.exclude ? not(eq(script.id, query.exclude)) : undefined,
+        query.u ? eq(script.userId, query.u) : undefined,
+      );
+
+      const scripts = await db
+        .select()
+        .from(script)
+        .where(scriptWhere)
+        .orderBy(
           query.sort === "popular"
-            ? { views: "desc" }
+            ? desc(script.views)
             : query.sort === "oldest"
-              ? { createdAt: "asc" }
-              : { createdAt: "desc" },
+              ? asc(script.createdAt)
+              : desc(script.createdAt),
+        )
+        .limit(limit)
+        .offset(offset);
 
-        skip,
-        take: limit,
-      });
-
-      const quantity = await prisma.script.count({ where: scriptWhere });
+      const [quantity] = await db
+        .select({
+          count: count(),
+        })
+        .from(script)
+        .where(scriptWhere);
 
       return {
         scripts,
-        next: quantity > skip + limit ? page + 1 : null,
+        next: quantity.count > offset + limit ? page + 1 : null,
       };
     },
     {
@@ -127,17 +134,20 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
           const id = nanoid();
           AWSS3Service.uploadWithFile(body.thumbnail, `thumbnails/${id}`);
 
-          return await prisma.script.create({
-            data: {
+          const [created] = await db
+            .insert(script)
+            .values({
               id,
               title: body.title,
               gameName,
               description: body.description,
               script: body.script,
               gameId,
-              user: { connect: { id: user.id } },
-            },
-          });
+              userId: user.id,
+            })
+            .returning();
+
+          return created;
         },
         { body: "script.create" },
       )
@@ -157,30 +167,29 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
             );
           }
 
-          return await prisma.script.update({
-            where: { id: params.id },
-            data: {
+          return await db
+            .update(script)
+            .set({
               title: body.title,
               gameName,
               description: body.description,
               script: body.script,
               gameId,
-            },
-          });
+            })
+            .where(eq(script.id, params.id))
+            .returning();
         },
         { body: "script.update" },
       )
-      .delete("/:id", async ({ user, params, error }) => {
-        try {
-          await prisma.script.delete({
-            where: { id: params.id, userId: user.id },
-          });
+      .delete("/:id", async ({ user, params }) => {
+        await ScriptsService.getById(params.id, user.id);
 
-          AWSS3Service.deleteFile("thumbnails", params.id);
+        await db
+          .delete(script)
+          .where(and(eq(script.id, params.id), eq(script.userId, user.id)));
 
-          return "OK";
-        } catch {
-          throw error(404);
-        }
+        AWSS3Service.deleteFile("thumbnails", params.id);
+
+        return "OK";
       }),
   );

@@ -1,17 +1,35 @@
-import { prisma } from "@esohasl/db";
+import { and, db, eq, script as scriptSchema, sql, user } from "@esohasl/db";
 import { error } from "elysia";
 
 const idRegex = /\/games\/(\d+)\/?/;
 
 export async function findAll() {
-  return await prisma.script.findMany();
+  return await db.select().from(scriptSchema);
 }
 
 export async function getById(id: string, userId?: number) {
-  const script = await prisma.script.findUnique({
-    where: { id, userId },
-    include: { user: { select: { username: true } } },
-  });
+  const [script] = await db
+    .select({
+      id: scriptSchema.id,
+      createdAt: scriptSchema.createdAt,
+      title: scriptSchema.title,
+      description: scriptSchema.description,
+      script: scriptSchema.script,
+      gameId: scriptSchema.gameId,
+      views: scriptSchema.views,
+      userId: scriptSchema.userId,
+      user: {
+        username: user.username,
+      },
+    })
+    .from(scriptSchema)
+    .innerJoin(user, eq(scriptSchema.userId, user.id))
+    .where(
+      and(
+        eq(scriptSchema.id, id),
+        userId ? eq(scriptSchema.userId, userId) : undefined,
+      ),
+    );
 
   if (!script) throw error(404);
 
@@ -19,27 +37,23 @@ export async function getById(id: string, userId?: number) {
 }
 
 export async function getRawById(id: string) {
-  const script = await prisma.script.findUnique({
-    where: { id },
-    select: { script: true },
+  const script = await db.query.script.findFirst({
+    where: eq(scriptSchema.id, id),
+    columns: {
+      script: true,
+    },
   });
 
   if (!script) throw error(404);
 
-  return script.script;
+  return script;
 }
 
 export async function incrementViews(id: string) {
-  try {
-    await prisma.script.update({
-      where: { id },
-      data: { views: { increment: 1 } },
-    });
-
-    return "OK";
-  } catch {
-    throw error(404);
-  }
+  await db
+    .update(scriptSchema)
+    .set({ views: sql`${scriptSchema.views} + 1` })
+    .where(eq(scriptSchema.id, id));
 }
 
 export async function getGameData(url: string | undefined) {
