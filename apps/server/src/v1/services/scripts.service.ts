@@ -46,7 +46,7 @@ export async function getRawById(id: string) {
 
   if (!script) throw error(404);
 
-  return script;
+  return script.script;
 }
 
 export async function incrementViews(id: string) {
