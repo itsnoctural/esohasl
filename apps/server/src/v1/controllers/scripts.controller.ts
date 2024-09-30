@@ -5,7 +5,7 @@ import {
   db,
   desc,
   eq,
-  ilike,
+  like,
   not,
   or,
   script,
@@ -67,9 +67,9 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
       const scriptWhere = and(
         query.q
           ? or(
-              ilike(script.title, query.q),
-              ilike(script.gameName, query.q),
-              ilike(script.description, query.q),
+              like(script.title, `%${query.q}%`),
+              like(script.gameName, `%${query.q}%`),
+              like(script.description, `%${query.q}%`),
             )
           : undefined,
         query.exclude ? not(eq(script.id, query.exclude)) : undefined,
