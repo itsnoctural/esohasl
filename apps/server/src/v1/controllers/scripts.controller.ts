@@ -10,6 +10,7 @@ import {
   or,
   script,
   sql,
+  sum,
 } from "@esohasl/db";
 import { Elysia, t } from "elysia";
 import { customAlphabet } from "nanoid";
@@ -30,12 +31,12 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
       const categories = await db
         .select({
           gameName: script.gameName,
-          views: sql`count(${script.views})`,
+          views: sum(script.views),
         })
         .from(script)
-        .orderBy(sql`views`)
-        .limit(query.limit)
-        .groupBy(script.gameName);
+        .orderBy(desc(sql`views`))
+        .groupBy(script.gameName)
+        .limit(query.limit);
 
       const modified = [];
 
