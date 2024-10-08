@@ -1,9 +1,9 @@
 import { url } from "@/app/shared-metadata";
 import { Card } from "@/components/card";
-import { CodeHighlight } from "@/components/code-highlight";
 import { ScriptInteractives } from "@/components/script-interactives";
 import { api } from "@/lib/api";
 import { intlFormatFromNow } from "@/lib/date";
+import { highlight } from "@/lib/shiki";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -60,6 +60,8 @@ export default async function ScriptPage({
     },
   });
 
+  const html = await highlight(data.script);
+
   return (
     <main className="mx-auto my-10 flex max-w-screen-xl flex-col justify-between gap-y-8">
       <div className="flex flex-col gap-y-4">
@@ -101,7 +103,8 @@ export default async function ScriptPage({
             <span>esohasl.net</span>
             <ScriptInteractives script={data.script} gameId={data.gameId} />
           </div>
-          <CodeHighlight code={data.script} />
+          {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+          <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">

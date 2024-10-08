@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { FaDiscord } from "react-icons/fa";
-import { Button } from "../ui/button";
+import { ThemeToggle } from "../../theme-toggle";
+import { Button } from "../../ui/button";
 import { CommandMenu } from "./command-menu";
 import { Profile } from "./profile";
-import { ThemeToggle } from "./theme-toggle";
 
 export async function Header() {
   return (

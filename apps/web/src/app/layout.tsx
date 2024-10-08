@@ -1,4 +1,3 @@
-import { Background } from "@/components/background";
 import { ClientProviders } from "@/components/client-providers";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -23,7 +22,7 @@ export default function RootLayout({
       <body>
         <ClientProviders>
           <ThemeProvider attribute="class">
-            <Background />
+            <div className="fixed -z-50 size-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-[size:16px_16px] dark:bg-[radial-gradient(#5e5e5e,transparent_1px)]" />
             {children}
             <Script
               defer

@@ -1,4 +1,4 @@
-import { UploadForm } from "@/components/upload-form";
+import { UploadForm } from "@/components/forms/upload";
 import { auth } from "@/lib/auth/server";
 import { redirect } from "next/navigation";
 
