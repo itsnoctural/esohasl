@@ -15,6 +15,7 @@ import {
 import { api } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { Skeleton } from "../ui/skeleton";
 
 function useDebounce(value: string, delay: number) {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -105,32 +106,41 @@ export function CommandMenu() {
           onValueChange={(value) => setSearch(value)}
         />
         <CommandList className="[scrollbar-width:thin] p-1">
-          <CommandEmpty>No results found.</CommandEmpty>
-          {data?.map((item) => (
-            <CommandItem
-              key={item.id}
-              value={item.id}
-              keywords={[item.title, item.gameName]}
-              onSelect={() =>
-                runCommand(() => router.push(`/script/${item.id}`))
-              }
-              className="flex gap-x-2"
-            >
-              <Image
-                src={`/thumbnails/${item.id}`}
-                alt={`${item.title} thumbnail`}
-                width={80}
-                height={45}
-                className="aspect-video rounded object-cover"
-              />
-              <div className="flex flex-col">
-                <span className="font-medium">{item.title}</span>
-                <span className="text-sm text-muted-foreground">
-                  {item.gameName}
-                </span>
-              </div>
-            </CommandItem>
-          ))}
+          {isLoading ? (
+            Array.from(new Array(10)).map((_, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              <Skeleton key={index} className="h-20 w-full mb-1" />
+            ))
+          ) : (
+            <>
+              <CommandEmpty>No results found.</CommandEmpty>
+              {data?.map((item) => (
+                <CommandItem
+                  key={item.id}
+                  value={item.id}
+                  keywords={[item.title, item.gameName]}
+                  onSelect={() =>
+                    runCommand(() => router.push(`/script/${item.id}`))
+                  }
+                  className="flex gap-x-2"
+                >
+                  <Image
+                    src={`/thumbnails/${item.id}`}
+                    alt={`${item.title} thumbnail`}
+                    width={80}
+                    height={45}
+                    className="aspect-video rounded object-cover"
+                  />
+                  <div className="flex flex-col">
+                    <span className="font-medium">{item.title}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {item.gameName}
+                    </span>
+                  </div>
+                </CommandItem>
+              ))}
+            </>
+          )}
         </CommandList>
       </CommandDialog>
     </>
