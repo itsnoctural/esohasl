@@ -1,5 +1,6 @@
 import { TextContainer, TextContent, TextTitle } from "@/components/text";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "EsohaSL - Privacy Policy",
@@ -16,9 +17,8 @@ export default function Privacy() {
         <TextContainer>
           This privacy policy describes how we collect, use, and disclose
           information that you provide to us when visiting our website and using
-          our services
-          {/* , including AdMaven and Google Analytics */}. We strive to protect
-          your privacy and ensure the security of your personal data.
+          our services, including AdMaven. We strive to protect your privacy and
+          ensure the security of your personal data.
         </TextContainer>
 
         <TextContainer>
@@ -44,7 +44,7 @@ export default function Privacy() {
             services, and communicate with you.
           </TextContent>
 
-          {/* <TextContent>
+          <TextContent>
             1.2. Information from AdMaven: We utilize the AdMaven advertising
             platform to display ads on our website. AdMaven may use cookies and
             other tracking technologies to gather information about your
@@ -59,7 +59,7 @@ export default function Privacy() {
               AdMaven&apos;s privacy policy
             </Link>
             &nbsp;applies to the collection and use of such information.
-          </TextContent> */}
+          </TextContent>
         </TextContainer>
 
         <TextContainer>
