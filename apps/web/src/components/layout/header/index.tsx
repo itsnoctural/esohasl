@@ -1,9 +1,8 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FaDiscord } from "react-icons/fa";
 import { ThemeToggle } from "../../theme-toggle";
-import { Button } from "../../ui/button";
 import { CommandMenu } from "./command-menu";
-import { Profile } from "./profile";
 
 export async function Header() {
   return (
@@ -30,7 +29,11 @@ export async function Header() {
           </Button>
 
           <ThemeToggle />
-          <Profile />
+          <Button variant={"outline"} size={"sm"} asChild>
+            <Link href={"/dashboard"} prefetch={false}>
+              Dashboard
+            </Link>
+          </Button>
         </div>
       </div>
     </header>
