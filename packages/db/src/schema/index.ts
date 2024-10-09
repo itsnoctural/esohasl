@@ -2,10 +2,10 @@ import { relations, sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
-  username: text("username").notNull().unique(),
+  id: integer().primaryKey({ autoIncrement: true }),
+  username: text().notNull().unique(),
 
-  provider: text("provider").notNull(),
+  provider: text().notNull(),
   providerId: text("provider_id").notNull().unique(),
 
   updatedNameAt: integer("updated_name_at", { mode: "timestamp" }),
@@ -15,18 +15,18 @@ export const user = sqliteTable("user", {
 });
 
 export const script = sqliteTable("script", {
-  id: text("id").primaryKey(),
+  id: text().primaryKey(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
 
-  title: text("title").notNull(),
+  title: text().notNull(),
   gameName: text("game_name").notNull(),
-  description: text("description"),
-  script: text("script").notNull(),
+  description: text(),
+  script: text().notNull(),
 
   gameId: text("game_id").notNull(),
-  views: integer("views").notNull().default(0),
+  views: integer().notNull().default(0),
 
   userId: integer("user_id")
     .notNull()
@@ -34,7 +34,7 @@ export const script = sqliteTable("script", {
 });
 
 export const session = sqliteTable("session", {
-  id: text("id").primaryKey(),
+  id: text().primaryKey(),
   userId: integer("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),

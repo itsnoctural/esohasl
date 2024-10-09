@@ -2,8 +2,7 @@ import type { Config } from "drizzle-kit";
 import { defineConfig } from "drizzle-kit";
 
 export default defineConfig({
-  dialect: "sqlite",
-  driver: "turso",
+  dialect: "turso",
   schema: "./src/schema/index.ts",
   out: "./drizzle",
   dbCredentials: {
