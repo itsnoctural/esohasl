@@ -10,8 +10,6 @@ namespace NodeJS {
     AWS_S3_ACCESS_KEY: string;
     AWS_S3_SECRET_ACCESS_KEY: string;
 
-    REDIS_URL: string;
-
     GITHUB_CLIENT_ID: string;
     GITHUB_CLIENT_SECRET: string;
     GITHUB_REDIRECT_URI: string;
