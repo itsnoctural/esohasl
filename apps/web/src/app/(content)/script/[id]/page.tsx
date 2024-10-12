@@ -1,12 +1,28 @@
 import { url } from "@/app/shared-metadata";
 import { Card } from "@/components/card";
 import { ScriptInteractives } from "@/components/script-interactives";
+import { StartSession } from "@/components/start-session";
 import { api } from "@/lib/api";
 import { intlFormatFromNow } from "@/lib/date";
 import { highlight } from "@/lib/shiki";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+
+const blurHtml = await highlight(`local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local LocalPlayer = Players.LocalPlayer
+
+getgenv().Settings = { Default = false }
+
+task.spawn(function()
+  while Settings.Default and task.wait() do
+    print(string.format("Username: %s", LocalPlayer.Name))
+  end
+end)
+`);
 
 export async function generateMetadata({
   params,
@@ -60,7 +76,18 @@ export default async function ScriptPage({
     },
   });
 
-  const html = await highlight(data.script);
+  const accessCookie = cookies().get("esohasl.access");
+  let canView = false;
+
+  if (accessCookie) {
+    const { data: access } = await api.v1.access.status.get({
+      query: { id: accessCookie.value },
+    });
+
+    if (access?.id) canView = true;
+  }
+
+  const html = canView ? await highlight(data.script) : blurHtml;
 
   return (
     <main className="mx-auto my-10 flex max-w-screen-xl flex-col justify-between gap-y-8">
@@ -98,13 +125,21 @@ export default async function ScriptPage({
           )}
         </div>
 
-        <div>
-          <div className="flex items-center justify-between rounded-t-lg border bg-background/85 p-3">
-            <span>esohasl.net</span>
-            <ScriptInteractives script={data.script} gameId={data.gameId} />
+        <div className="relative rounded-t-lg border border-border">
+          {/* TODO: Optimize to avoid set rounded twice? */}
+          <div
+            className={
+              canView ? undefined : "pointer-events-none select-none blur"
+            }
+          >
+            <div className="flex items-center justify-between rounded-t-lg bg-background/85 p-3">
+              <span>esohasl.net</span>
+              <ScriptInteractives script={data.script} gameId={data.gameId} />
+            </div>
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
+            <div dangerouslySetInnerHTML={{ __html: html }} />
           </div>
-          {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-          <div dangerouslySetInnerHTML={{ __html: html }} />
+          {!canView && <StartSession />}
         </div>
       </div>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">

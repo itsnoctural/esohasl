@@ -45,3 +45,8 @@ export const userRelations = relations(user, ({ many }) => ({
   scripts: many(script),
   sessions: many(session),
 }));
+
+export const access = sqliteTable("access", {
+  id: text().primaryKey(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+});

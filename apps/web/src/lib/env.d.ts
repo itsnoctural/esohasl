@@ -3,6 +3,9 @@ namespace NodeJS {
     NEXT_PUBLIC_API: string;
     NEXT_PUBLIC_CDN: string;
 
+    LOOTLABS_LINK: string;
+    LOOTLABS_API_KEY: string;
+
     AUTH_DOMAIN: string;
 
     AWS_S3_REGION: string;
