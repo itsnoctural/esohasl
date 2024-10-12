@@ -45,6 +45,8 @@ export const AccessController = new Elysia({ prefix: "/access" })
         value: accessValue[0].id,
         path: "/",
         secure: Bun.env.NODE_ENV === "production",
+        domain:
+          Bun.env.NODE_ENV === "production" ? Bun.env.AUTH_DOMAIN : "localhost",
         httpOnly: true,
         maxAge: 86400,
         sameSite: "lax",
