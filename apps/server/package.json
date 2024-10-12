@@ -7,17 +7,17 @@
     "build": "bun build src/index.ts --target=bun --sourcemap --outdir dist"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.637.0",
-    "@elysiajs/cors": "1.1.0",
+    "@aws-sdk/client-s3": "^3.670.0",
+    "@elysiajs/cors": "1.1.1",
     "@esohasl/db": "workspace:*",
     "@lucia-auth/adapter-drizzle": "^1.1.0",
     "arctic": "^1.9.2",
-    "elysia": "^1.1.9",
-    "lucia": "^3.2.0",
+    "elysia": "^1.1.20",
+    "lucia": "^3.2.1",
     "nanoid": "^5.0.7"
   },
   "devDependencies": {
-    "@types/bun": "^1.1.8",
+    "@types/bun": "^1.1.11",
     "@esohasl/tsconfig": "workspace:*"
   },
   "main": "src/index.ts",
