@@ -21,6 +21,9 @@ namespace NodeJS {
     GOOGLE_CLIENT_SECRET: string;
     GOOGLE_REDIRECT_URI: string;
 
+    TURSO_DATABASE_URL: string;
+    TURSO_AUTH_TOKEN: string;
+
     HOME_URL: string;
   }
 }
