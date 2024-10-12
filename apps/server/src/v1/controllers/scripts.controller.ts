@@ -133,7 +133,7 @@ export const ScriptsController = new Elysia({ prefix: "/scripts" })
           );
 
           const id = nanoid();
-          AWSS3Service.uploadWithFile(body.thumbnail, `thumbnails/${id}`);
+          await AWSS3Service.uploadWithFile(body.thumbnail, `thumbnails/${id}`);
 
           const [created] = await db
             .insert(script)
