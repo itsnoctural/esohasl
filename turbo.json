@@ -6,7 +6,6 @@
       "cache": false
     },
     "build": {
-      "dependsOn": ["^db:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
     "server#build": {
@@ -14,9 +13,6 @@
     },
     "web#build": {
       "outputs": [".next/**", "!.next/cache/**"]
-    },
-    "db:generate": {
-      "cache": false
     }
   }
 }
