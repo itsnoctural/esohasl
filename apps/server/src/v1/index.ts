@@ -8,4 +8,4 @@ export const api = new Elysia({ prefix: "/v1" })
   .use(AuthController)
   .use(UsersController)
   .use(ScriptsController)
-  .use(AccessController)
+  .use(AccessController);
