@@ -31,33 +31,35 @@ export const AccessController = new Elysia({ prefix: "/access" })
   .get(
     "/",
     async ({ headers, cookie, query, redirect, error }) => {
-      console.log(headers.referer);
+      if (headers.referer?.match("loot")) {
+        const accessValue = await db
+          .insert(access)
+          .values({
+            id: nanoid(),
+            expiresAt: new Date(Date.now() + 8.64e7),
+          })
+          .returning();
 
-      const accessValue = await db
-        .insert(access)
-        .values({
-          id: nanoid(),
-          expiresAt: new Date(Date.now() + 8.64e7),
-        })
-        .returning();
+        cookie["esohasl.access"].set({
+          value: accessValue[0].id,
+          path: "/",
+          secure: Bun.env.NODE_ENV === "production",
+          domain:
+            Bun.env.NODE_ENV === "production"
+              ? Bun.env.AUTH_DOMAIN
+              : "localhost",
+          httpOnly: true,
+          maxAge: 86400,
+          sameSite: "lax",
+        });
 
-      cookie["esohasl.access"].set({
-        value: accessValue[0].id,
-        path: "/",
-        secure: Bun.env.NODE_ENV === "production",
-        domain:
-          Bun.env.NODE_ENV === "production" ? Bun.env.AUTH_DOMAIN : "localhost",
-        httpOnly: true,
-        maxAge: 86400,
-        sameSite: "lax",
-      });
+        return redirect(query.return);
+      }
 
-      return redirect(query.return);
-
-      // return error(
-      //   400,
-      //   "It looks like bypass. We understand that ads can be annoying, but your few clicks will help a lot. Also, your session will be saved, so you won't need to complete this link again for the next 24 hours.",
-      // );
+      return error(
+        400,
+        "It looks like bypass. We understand that ads can be annoying, but your few clicks will help a lot. Also, your session will be saved, so you won't need to complete this link again for the next 24 hours.",
+      );
     },
     {
       query: t.Object({
