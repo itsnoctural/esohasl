@@ -1,7 +1,9 @@
-FROM oven/bun:slim AS build
+FROM oven/bun:alpine AS build
 
 WORKDIR /app
-COPY --from=node:lts-slim /usr/local/bin/node /usr/local/bin/node
+ENV NODE_ENV=production
+
+COPY --from=node:lts-alpine /usr/local/bin/node /usr/local/bin/node
 
 COPY . .
 RUN rm -rf /app/apps/web
@@ -9,10 +11,10 @@ RUN rm -rf /app/apps/web
 RUN bun install
 RUN bun run build
 
-FROM oven/bun:slim
+FROM oven/bun:alpine
 
-RUN apt update
-RUN apt install -y ca-certificates
+RUN apk update
+RUN apk add ca-certificates
 RUN update-ca-certificates
 
 WORKDIR /app
