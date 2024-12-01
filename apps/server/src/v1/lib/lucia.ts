@@ -41,7 +41,7 @@ interface DatabaseUserAttributes {
 export const github = new GitHub(
   Bun.env.GITHUB_CLIENT_ID,
   Bun.env.GITHUB_CLIENT_SECRET,
-  { redirectURI: Bun.env.GITHUB_REDIRECT_URI },
+  Bun.env.GITHUB_REDIRECT_URI,
 );
 
 export const google = new Google(

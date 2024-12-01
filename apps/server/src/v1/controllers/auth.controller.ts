@@ -11,7 +11,7 @@ export const AuthController = new Elysia({ prefix: "/auth" })
     app
       .get("/github", async ({ cookie, redirect }) => {
         const state = generateState();
-        const url = await github.createAuthorizationURL(state);
+        const url = github.createAuthorizationURL(state, []);
 
         cookie.github_state.set({
           value: state,
@@ -28,9 +28,9 @@ export const AuthController = new Elysia({ prefix: "/auth" })
         const state = generateState();
         const codeVerifier = generateCodeVerifier();
 
-        const url = await google.createAuthorizationURL(state, codeVerifier, {
-          scopes: ["profile"],
-        });
+        const url = google.createAuthorizationURL(state, codeVerifier, [
+          "profile",
+        ]);
 
         cookie.google_state.set({
           value: state,
@@ -73,11 +73,10 @@ export const AuthController = new Elysia({ prefix: "/auth" })
           if (cookie.github_state.value !== query.state)
             throw error(400, "Incorrect state.");
 
-          const { accessToken } = await github.validateAuthorizationCode(
-            query.code,
+          const tokens = await github.validateAuthorizationCode(query.code);
+          const { id, login, avatar_url } = await AuthService.getUserGithub(
+            tokens.accessToken(),
           );
-          const { id, login, avatar_url } =
-            await AuthService.getUserGithub(accessToken);
 
           const user = await UsersService.findOrCreate(
             `${id}`,
@@ -103,13 +102,14 @@ export const AuthController = new Elysia({ prefix: "/auth" })
           )
             throw error(400, "Incorrect state.");
 
-          const { accessToken } = await google.validateAuthorizationCode(
+          const tokens = await google.validateAuthorizationCode(
             query.code,
             cookie.code_verifier.value,
           );
 
-          const { sub, name, picture } =
-            await AuthService.getUserGoogle(accessToken);
+          const { sub, name, picture } = await AuthService.getUserGoogle(
+            tokens.accessToken(),
+          );
 
           const user = await UsersService.findOrCreate(
             `${sub}`,
