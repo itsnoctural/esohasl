@@ -8,9 +8,7 @@
     "build": {
       "inputs": ["$TURBO_DEFAULT$", ".env"]
     },
-    "server#build": {
-      "outputs": ["dist/**"]
-    },
+    "server#build": {},
     "web#build": {
       "outputs": [".next/**", "!.next/cache/**"]
     }

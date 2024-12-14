@@ -1,9 +1,9 @@
-FROM oven/bun:alpine AS build
+FROM oven/bun:slim AS build
 
 WORKDIR /app
 ENV NODE_ENV=production
 
-COPY --from=node:lts-alpine /usr/local/bin/node /usr/local/bin/node
+COPY --from=node:lts-slim /usr/local/bin/node /usr/local/bin/node
 
 COPY . .
 RUN rm -rf /app/apps/web
@@ -11,17 +11,15 @@ RUN rm -rf /app/apps/web
 RUN bun install
 RUN bun run build
 
-FROM oven/bun:alpine
+FROM debian:stable-slim
 
-RUN apk update
-RUN apk add ca-certificates
+RUN apt update -y
+RUN apt install ca-certificates -y
 RUN update-ca-certificates
 
 WORKDIR /app
-ENV NODE_ENV=production
-
-COPY --from=build /app/apps/server/dist /app/dist
-COPY --from=build /app/packages /app/packages
+COPY --from=build /app/packages/db/drizzle /app/drizzle
+COPY --from=build /app/apps/server/main /app/main
 
 EXPOSE 3000
-CMD ["bun", "dist/index.js"]
+CMD ["./main"]
