@@ -27,6 +27,7 @@ primary_region = "atl"
     path = "/ping"
 
 [env]
+  NODE_ENV = "production"
   AUTH_DOMAIN = "esohasl.net"
   HOME_URL = "https://esohasl.net"
 
