@@ -13,6 +13,7 @@
     "@biomejs/biome",
     "@prisma/client",
     "@prisma/engines",
+    "esbuild",
     "prisma"
   ],
   "workspaces": ["apps/*", "packages/*"],

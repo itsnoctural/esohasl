@@ -1,6 +1,6 @@
 "use client";
 
-import { lootlabs } from "@/actions/lootlabs";
+import { start } from "@/actions/start";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
@@ -20,7 +20,7 @@ export function StartSession() {
         variant={"secondary"}
         className="mb-1 w-full"
         onClick={() => {
-          if (url) lootlabs(url, "https://esohasl.net/set-error");
+          if (url) start(url);
         }}
       >
         Start to unlock
