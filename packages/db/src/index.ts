@@ -9,7 +9,7 @@ const client = createClient({
 });
 
 export const db = drizzle(client, { schema });
-await migrate(db, { migrationsFolder: `/app/drizzle` });
+await migrate(db, { migrationsFolder: "/app/drizzle" });
 
 export * from "drizzle-orm";
 export * from "./schema";
