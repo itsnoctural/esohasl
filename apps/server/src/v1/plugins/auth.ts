@@ -17,6 +17,10 @@ export const auth = new Elysia()
         throw error(403);
     }
 
+    if (!cookie["esohasl.auth"].value) {
+      throw error(422);
+    } // REFACTOR: types after guard doesn't work after Elysia 1.2
+
     const { session, user } = await lucia.validateSession(
       cookie["esohasl.auth"].value,
     );
