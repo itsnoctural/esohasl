@@ -35,6 +35,13 @@ export default function RootLayout({
               src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1012710"
             />
           </ThemeProvider>
+
+          <div aria-hidden="true">
+            {[...Array(12).keys()].map((id) => (
+              // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
+              <div className="snowflake">❅</div>
+            ))}
+          </div>
         </ClientProviders>
       </body>
     </html>
