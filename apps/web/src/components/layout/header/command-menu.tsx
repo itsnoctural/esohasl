@@ -81,9 +81,13 @@ export function CommandMenu() {
       <Button
         variant="outline"
         className={
-          "relative hidden h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:inline-flex sm:pr-12 plausible-event-name=search"
+          "relative hidden h-8 w-full justify-start rounded-[0.5rem] bg-muted/50 text-sm font-normal text-muted-foreground shadow-none sm:inline-flex sm:pr-12"
         }
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          (window as any).plausible("search");
+          setOpen(true);
+        }}
       >
         <span>Search the best scripts...</span>
         <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100">
@@ -93,8 +97,12 @@ export function CommandMenu() {
       <Button
         size="icon"
         variant={"outline"}
-        className="inline-flex sm:hidden plausible-event-name=search"
-        onClick={() => setOpen(true)}
+        className="inline-flex sm:hidden"
+        onClick={() => {
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          (window as any).plausible("search");
+          setOpen(true);
+        }}
       >
         <Search size={16} />
       </Button>
