@@ -127,9 +127,14 @@ export function CommandMenu() {
                   key={item.id}
                   value={item.id}
                   keywords={[item.title, item.gameName]}
-                  onSelect={() =>
-                    runCommand(() => router.push(`/script/${item.id}`))
-                  }
+                  onSelect={() => {
+                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+                    (window as any).plausible("pageview", {
+                      props: { search_success: item.id },
+                    });
+
+                    runCommand(() => router.push(`/script/${item.id}`));
+                  }}
                   className="flex gap-x-2"
                 >
                   <Image
