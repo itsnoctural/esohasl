@@ -47,7 +47,14 @@ export function ScriptList({
 
   return (
     <main className="mx-auto flex w-full max-w-screen-xl flex-col">
-      <ChipGroup defaultValue={"All"} onSelect={(value) => setGame(value)}>
+      <ChipGroup
+        defaultValue={"All"}
+        onSelect={(value) => {
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          (window as any).plausible("chip");
+          setGame(value);
+        }}
+      >
         {categories.map((item) => (
           <Chip key={item.gameName} value={item.gameName} />
         ))}
