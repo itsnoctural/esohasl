@@ -17,5 +17,5 @@
     "prisma"
   ],
   "workspaces": ["apps/*", "packages/*"],
-  "packageManager": "bun@1.1.42"
+  "packageManager": "bun@1.2.4"
 }
