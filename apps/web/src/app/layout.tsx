@@ -34,12 +34,12 @@ export default function RootLayout({
               data-cfasync="false"
               src="//dcbbwymp1bhlf.cloudfront.net/?wbbcd=1012710"
             /> */}
-            <Script
+            {/* <Script
               async
               src="https://cdn.work.ink/js/redirect.js?id=135"
               data-url="https://work.ink/direct/135"
               data-max="2"
-            />
+            /> */}
           </ThemeProvider>
         </ClientProviders>
       </body>

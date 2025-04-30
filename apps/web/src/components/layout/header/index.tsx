@@ -7,6 +7,11 @@ import { CommandMenu } from "./command-menu";
 export async function Header() {
   return (
     <header className="z-50 w-full">
+      <div className="bg-red-700 rounded-lg px-2 py-1 mb-2 text-center">
+        <span className="text-lime-400 font-medium">esohasl.net</span>
+        <span className="text-gray-100"> will no longer be maintained and will become static. Further details later.</span>
+      </div>
+
       <div className="mx-auto flex h-14 w-full max-w-screen-xl items-center justify-between gap-x-1.5 rounded-xl border border-border bg-background/75 px-4">
         <div className="justify-start">
           <Link href={"/"}>
